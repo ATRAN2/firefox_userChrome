@@ -11,11 +11,11 @@
 .tab-stack {
     width: 100%;
 }
-.tabbrowser-tabs .scrollbox-innerbox {
+#tabbrowser-tabs .scrollbox-innerbox {
     display: flex;
     flex-wrap: wrap;
 }
-.tabbrowser-tabs .arrowscrollbox-scrollbox {
+#tabbrowser-tabs .arrowscrollbox-scrollbox {
     overflow: visible;
     display: block;
 }
@@ -34,7 +34,7 @@
 #titlebar:active #titlebar-content{
     margin-bottom:var(--tab-min-height) !important;
 }
-.tabbrowser-tabs .scrollbutton-up,.tabbrowser-tabs .scrollbutton-down,#alltabs-button,.tabbrowser-tab:not([fadein]){
+#tabbrowser-tabs .scrollbutton-up,.tabbrowser-tabs .scrollbutton-down,#alltabs-button,.tabbrowser-tab:not([fadein]){
     display: none;
 }
 /*
