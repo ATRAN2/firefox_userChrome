@@ -1,42 +1,69 @@
 /*
   Multi-row Tabs
 */
-.tabbrowser-tab:not([pinned]) {
-    flex-grow:1;
-    min-width:150px;
+:root{ --multirow-n-rows: 3 }
+
+#tabbrowser-tabs{
+  min-height: unset !important;
+  padding-inline-start: 0px !important
 }
-.tabbrowser-tab,.tab-background {
-    height:var(--tab-min-height);
-}
-.tab-stack {
-    width: 100%;
-}
-#tabbrowser-tabs .scrollbox-innerbox {
+
+/* Test for Firefox > 66 */
+@supports (inset-block:auto){
+  #tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox{
     display: flex;
     flex-wrap: wrap;
-}
-#tabbrowser-tabs .arrowscrollbox-scrollbox {
-    overflow: visible;
+    overflow-y: auto;
+    max-height: calc(var(--tab-min-height) * var(--multirow-n-rows));
+    scrollbar-color: var(--toolbar-bgcolor) var(--lwt-accent-color);
+    scrollbar-width: thin;
+  }
+  #tabbrowser-tabs > .tabbrowser-arrowscrollbox {
+    overflow: -moz-hidden-unscrollable;
     display: block;
+  }
 }
-#titlebar,#titlebar-buttonbox{
-    height:var(--tab-min-height) !important;
+
+/* Test for Firefox < 66 */
+@supports not (inset-block:auto){
+  #tabbrowser-tabs > .tabbrowser-arrowscrollbox{
+    min-height: unset !important;
+  }
+  #tabbrowser-tabs .scrollbox-innerbox{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #tabbrowser-tabs .arrowscrollbox-scrollbox {
+    overflow: -moz-hidden-unscrollable;
+    display: block;
+  }
 }
-#titlebar{
-    margin-bottom:calc(var(--tab-min-height)*-1) !important;
+
+.tabbrowser-tab{ height: var(--tab-min-height); }
+#tabbrowser-tabs .tabbrowser-tab[pinned]{
+  position: static !important;
+  margin-inline-start: 0px !important;
 }
-#main-window[sizemode="maximized"] #titlebar{
-    margin-bottom:calc(6px + var(--tab-min-height)*-1) !important;
+
+.tabbrowser-tab[fadein]:not([pinned]){
+  min-width: 100px !important;
+  flex-grow: 1;
+  /*
+  Uncomment to enable full-width tabs, also makes tab dragging a tiny bit more sensible
+  Don't set to none or you'll see errors in console when closing tabs
+  */
+  /*max-width: 100vw !important;*/
 }
-#titlebar:active{
-    margin-bottom:0 !important;
-}
-#titlebar:active #titlebar-content{
-    margin-bottom:var(--tab-min-height) !important;
-}
-#tabbrowser-tabs .scrollbutton-up,.tabbrowser-tabs .scrollbutton-down,#alltabs-button,.tabbrowser-tab:not([fadein]){
-    display: none;
-}
+
+.tabbrowser-tab > stack{ width: 100%; height: 100% }
+
+#tabbrowser-tabs .scrollbutton-up,
+#tabbrowser-tabs .scrollbutton-down,
+#alltabs-button,
+:root:not([customizing]) #TabsToolbar #new-tab-button,
+#tabbrowser-tabs spacer,
+.tabbrowser-tab::after{ display: none !important }
+
 /*
   Smaller close/minimize/maximize button box
 */
